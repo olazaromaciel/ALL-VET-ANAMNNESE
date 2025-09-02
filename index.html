@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e3c72">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Anamnese All Vet">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="logo/logoallvet.png">
+    <title>Ficha de Anamnese Veterinária - All Vet</title>
+    <link rel="stylesheet" href="styles.css?v=20">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <!-- Fallback para fontes e ícones -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        /* Font Awesome - sem fallbacks para manter profissional */
+        .fas, .far, .fab {
+            font-family: 'Font Awesome 6 Free', 'Font Awesome 6 Brands', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header com Logo e Título -->
+        <header class="header">
+            <div class="logo">
+                <img src="logo/logoallvet.png" alt="All Vet Logo" class="logo-img">
+            </div>
+            <h2>FICHA DE ANAMNESE VETERINÁRIA</h2>
+            <div class="student-info">
+                Lázaro Maciel - 20241VET.SRM0018
+            </div>
+        </header>
+        <div class="content-grid">
+            <!-- Navegação lateral -->
+            <nav class="section-nav">
+                <button type="button" class="nav-btn active" data-section="responsavel"><i class="fas fa-user"></i><span>Responsável</span></button>
+                <button type="button" class="nav-btn" data-section="animal"><i class="fas fa-paw"></i><span>Animal</span></button>
+                <button type="button" class="nav-btn" data-section="queixa"><i class="fas fa-comment-medical"></i><span>Queixa</span></button>
+                <button type="button" class="nav-btn" data-section="historicoAnimal"><i class="fas fa-history"></i><span>Histórico Animal</span></button>
+                <button type="button" class="nav-btn" data-section="historicoAmbiental"><i class="fas fa-home"></i><span>Histórico Ambiental</span></button>
+                <button type="button" class="nav-btn" data-section="sinaisClinicos"><i class="fas fa-stethoscope"></i><span>Sinais Clínicos</span></button>
+                <button type="button" class="nav-btn" data-section="alimentacao"><i class="fas fa-utensils"></i><span>Alimentação</span></button>
+                <button type="button" class="nav-btn" data-section="exameFisico"><i class="fas fa-heartbeat"></i><span>Exame Físico</span></button>
+                <button type="button" class="nav-btn" data-section="examesComplementares"><i class="fas fa-microscope"></i><span>Exames Complementares</span></button>
+                <button type="button" class="nav-btn" data-section="condutaTratamento"><i class="fas fa-pills"></i><span>Conduta e Tratamento</span></button>
+                <button type="button" class="nav-btn" data-section="avaliacao"><i class="fas fa-clipboard-check"></i><span>Avaliação Clínica</span></button>
+                <button type="button" class="nav-btn" data-section="retorno"><i class="fas fa-calendar-check"></i><span>Retorno</span></button>
+             </nav>
+
+            <!-- Formulário Principal -->
+            <form id="anamneseForm" class="form-container">
+            <!-- Seção 1: Dados do Responsável -->
+            <section id="responsavel" class="form-section active">
+                <div class="section-header">
+                <h3><i class="fas fa-user"></i> Dados do Responsável</h3>
+                    <p>Informações do tutor ou responsável pelo animal</p>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="nomeResponsavel">Nome Completo *</label>
+                        <input type="text" id="nomeResponsavel" name="nomeResponsavel" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefone">Telefone / WhatsApp *</label>
+                        <input type="tel" id="telefone" name="telefone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endereco">Endereço</label>
+                        <input type="text" id="endereco" name="endereco">
+                    </div>
+                    <div class="form-group">
+                        <label for="rg">RG</label>
+                        <input type="text" id="rg" name="rg">
+                    </div>
+                    <div class="form-group">
+                        <label for="cpf">CPF</label>
+                        <input type="text" id="cpf" name="cpf">
+                    </div>
+                    <div class="form-group">
+                        <label for="dataConsulta">Data da Consulta *</label>
+                        <input type="date" id="dataConsulta" name="dataConsulta" required>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção 2: Identificação do Animal -->
+            <section id="animal" class="form-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-paw"></i> Identificação do Animal</h3>
+                    <p>Dados de identificação e características do paciente</p>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="nomeAnimal">Nome do Animal *</label>
+                        <input type="text" id="nomeAnimal" name="nomeAnimal" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="especie">Espécie *</label>
+                        <select id="especie" name="especie" required>
+                            <option value="">Selecione...</option>
+                            <option value="canino">Canino</option>
+                            <option value="felino">Felino</option>
+                            <option value="ave">Ave</option>
+                            <option value="roedor">Roedor</option>
+                            <option value="outro">Outro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="raca">Raça</label>
+                        <input type="text" id="raca" name="raca">
+                    </div>
+                    <div class="form-group">
+                        <label for="idade">Idade</label>
+                        <input type="text" id="idade" name="idade" placeholder="Ex: 3 anos ou 18 meses">
+                    </div>
+                    <div class="form-group">
+                        <label for="peso">Peso Atual (kg)</label>
+                        <input type="number" id="peso" name="peso" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="corPelagem">Cor / Pelagem</label>
+                        <input type="text" id="corPelagem" name="corPelagem">
+                    </div>
+                    <div class="form-group">
+                        <label for="sexo">Sexo *</label>
+                        <select id="sexo" name="sexo" required>
+                            <option value="">Selecione...</option>
+                            <option value="M">Macho</option>
+                            <option value="F">Fêmea</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="estadoReprodutivo">Estado Reprodutivo</label>
+                        <select id="estadoReprodutivo" name="estadoReprodutivo">
+                            <option value="">Selecione...</option>
+                            <option value="castrado">Castrado(a)</option>
+                            <option value="naoCastrado">Não castrado(a)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="identificacao">Identificação</label>
+                        <input type="text" id="identificacao" name="identificacao" placeholder="Microchip, tatuagem, brinco, etc.">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção 3: Queixa Principal -->
+            <section id="queixa" class="form-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-comment-medical"></i> Queixa Principal</h3>
+                    <p>Motivo da consulta e evolução do quadro clínico</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="queixaPrincipal">Qual é o motivo da consulta? *</label>
+                    <textarea id="queixaPrincipal" name="queixaPrincipal" rows="4" required 
+                              placeholder="Descreva detalhadamente o motivo da consulta..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tempoSinais">Há quanto tempo apresenta os sinais?</label>
+                    <input type="text" id="tempoSinais" name="tempoSinais" placeholder="Ex: 2 dias, 1 semana, etc.">
+                </div>
+                
+                <div class="form-group">
+                    <label for="evolucaoQuadro">Evolução do quadro</label>
+                    <select id="evolucaoQuadro" name="evolucaoQuadro">
+                        <option value="">Selecione...</option>
+                        <option value="inicioSubito">Início súbito</option>
+                        <option value="gradual">Gradual</option>
+                        <option value="intermitente">Intermitente</option>
+                        <option value="progressivo">Progressivo</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- Seção 4: Histórico do Animal -->
+            <section id="historicoAnimal" class="form-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-history"></i> Histórico do Animal</h3>
+                    <p>Informações sobre saúde, vacinação e tratamentos prévios</p>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="vacinas">Vacinação</label>
+                        <select id="vacinas" name="vacinas">
+                            <option value="">Selecione...</option>
+                            <option value="emDia">Em dia</option>
+                            <option value="atrasada">Atrasada</option>
+                            <option value="naoVacinado">Não vacinado</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ultimaVermifugacao">Última vermifugação</label>
+                        <input type="date" id="ultimaVermifugacao" name="ultimaVermifugacao">
+                    </div>
+                    <div class="form-group">
+                        <label for="controleEctoparasitas">Controle de ectoparasitas</label>
+                        <select id="controleEctoparasitas" name="controleEctoparasitas">
+                            <option value="">Selecione...</option>
+                            <option value="sim">Sim</option>
+                            <option value="nao">Não</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ultimaAplicacaoEcto">Última aplicação</label>
+                        <input type="date" id="ultimaAplicacaoEcto" name="ultimaAplicacaoEcto">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="alergiasConhecidas">Alergias conhecidas</label>
+                    <textarea id="alergiasConhecidas" name="alergiasConhecidas" rows="3" 
+                              placeholder="Alergias alimentares, medicamentosas, etc."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="doencasPrevias">Doenças prévias / Cirurgias / Internações</label>
+                    <textarea id="doencasPrevias" name="doencasPrevias" rows="3" 
+                              placeholder="Descreva doenças, cirurgias ou internações anteriores..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="medicamentosAtuais">Medicamentos em uso</label>
+                    <textarea id="medicamentosAtuais" name="medicamentosAtuais" rows="3" 
+                              placeholder="Liste medicamentos que o animal está tomando..."></textarea>
+                </div>
+            </section>
+
+            <!-- Seção 5: Histórico Ambiental -->
+            <section id="historicoAmbiental" class="form-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-home"></i> Histórico Ambiental</h3>
+                    <p>Condições de vida e ambiente do animal</p>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="tipoMoradia">Vive em</label>
+                        <select id="tipoMoradia" name="tipoMoradia">
+                            <option value="">Selecione...</option>
+                            <option value="casa">Casa</option>
+                            <option value="apartamento">Apartamento</option>
+                            <option value="quintal">Quintal</option>
+                            <option value="fazenda">Fazenda</option>
+                            <option value="outros">Outros</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipoAcesso">Tipo de acesso</label>
+                        <select id="tipoAcesso" name="tipoAcesso">
+                            <option value="">Selecione...</option>
+                            <option value="restrito">Restrito</option>
+                            <option value="livre">Livre</option>
+                            <option value="parcialmenteLivre">Parcialmente livre</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contatoOutrosAnimais">Contato com outros animais</label>
+                    <textarea id="contatoOutrosAnimais" name="contatoOutrosAnimais" rows="3" 
+                              placeholder="Descreva se há contato com outros animais..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="viagensRecentes">Viagens recentes</label>
+                    <textarea id="viagensRecentes" name="viagensRecentes" rows="3" 
+                              placeholder="Descreva viagens recentes e destinos..."></textarea>
+                </div>
+            </section>
+
+            <!-- Seção 6: Sinais Clínicos Observados -->
+            <section id="sinaisClinicos" class="form-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-stethoscope"></i> Sinais Clínicos Observados</h3>
+                    <p>Marcar todos os sinais que se aplicam ao caso</p>
+                </div>
+                
+                <div class="sinais-grid">
+                    <div class="sinais-categoria">
+                    <h4><i class="fas fa-stomach"></i> Sistema Digestório</h4>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                                <input type="checkbox" name="sinaisDigestorio" value="apatiaProstracao">
+                                <span class="checkmark"></span>
+                                Apatia / Prostração
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="sinaisDigestorio" value="febre">
+                                <span class="checkmark"></span>
+                                Febre
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="sinaisDigestorio" value="emese">
+                            <span class="checkmark"></span>
+                                Êmese
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sinaisDigestorio" value="diarreia">
+                            <span class="checkmark"></span>
+                            Diarreia
+                        </label>
+                        <label class="checkbox-label">
+                                <input type="checkbox" name="sinaisDigestorio" value="faltaApetite">
+                            <span class="checkmark"></span>
+                                Falta de apetite
+                        </label>
+                    </div>
+                </div>
+
+                    <div class="sinais-categoria">
+                        <h4><i class="fas fa-lungs"></i> Sistema Respiratório</h4>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                                <input type="checkbox" name="sinaisRespiratorio" value="tosse">
+                            <span class="checkmark"></span>
+                                Tosse
+                        </label>
+                        <label class="checkbox-label">
+                                <input type="checkbox" name="sinaisRespiratorio" value="espirro">
+                            <span class="checkmark"></span>
+                                Espirro
+                        </label>
+                        <label class="checkbox-label">
+                                <input type="checkbox" name="sinaisRespiratorio" value="rinorreia">
+                            <span class="checkmark"></span>
+                                Rinorreia
+                        </label>
+                        <label class="checkbox-label">
+                                <input type="checkbox" name="sinaisRespiratorio" value="dispneia">
+                            <span class="checkmark"></span>
+                                Dispneia
+                        </label>
+                    </div>
+                </div>
+
+                    <div class="sinais-categoria">
+                        <h4><i class="fas fa-kidney"></i> Sistema Urogenital</h4>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                                <input type="checkbox" name="sinaisUrogenital" value="poliuria">
+                            <span class="checkmark"></span>
+                                Poliúria
+                        </label>
+                        <label class="checkbox-label">
+                                <input type="checkbox" name="sinaisUrogenital" value="polaciuria">
+                            <span class="checkmark"></span>
+                                Polaciúria
+                        </label>
+                        <label class="checkbox-label">
+                                <input type="checkbox" name="sinaisUrogenital" value="hematúria">
+                            <span class="checkmark"></span>
+                                Hematúria
+                        </label>
+                        <label class="checkbox-label">
+                                <input type="checkbox" name="sinaisUrogenital" value="dificuldadeUrinar">
+                            <span class="checkmark"></span>
+                                Dificuldade para urinar
+                        </label>
+                    </div>
+                </div>
+
+                    <div class="sinais-categoria">
+                    <h4><i class="fas fa-brain"></i> Sistema Neurológico</h4>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                                <input type="checkbox" name="sinaisNeurologico" value="convulsoes">
+                            <span class="checkmark"></span>
+                                Convulsões
+                        </label>
+                        <label class="checkbox-label">
+                                <input type="checkbox" name="sinaisNeurologico" value="tremores">
+                            <span class="checkmark"></span>
+                                Tremores
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sinaisNeurologico" value="ataxia">
+                            <span class="checkmark"></span>
+                            Ataxia
+                        </label>
+                    </div>
+                </div>
+
+                    <div class="sinais-categoria">
+                    <h4><i class="fas fa-walking"></i> Sistema Motor</h4>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                                <input type="checkbox" name="sinaisMotor" value="claudicacao">
+                            <span class="checkmark"></span>
+                                Claudicação
+                        </label>
+                        <label class="checkbox-label">
+                                <input type="checkbox" name="sinaisMotor" value="dorMovimento">
+                            <span class="checkmark"></span>
+                            Dor ao movimento
+                        </label>
+                    </div>
+                </div>
+
+                    <div class="sinais-categoria">
+                    <h4><i class="fas fa-palette"></i> Pele e Pelagem</h4>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                                <input type="checkbox" name="sinaisPele" value="coceira">
+                            <span class="checkmark"></span>
+                                Coceira
+                        </label>
+                        <label class="checkbox-label">
+                                <input type="checkbox" name="sinaisPele" value="lesoesPele">
+                            <span class="checkmark"></span>
+                                Lesões de pele
+                        </label>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="outrosSinais">Outros sinais</label>
+                    <textarea id="outrosSinais" name="outrosSinais" rows="3" 
+                              placeholder="Descreva outros sinais observados..."></textarea>
+                </div>
+            </section>
+
+            <!-- Seção 7: Alimentação -->
+            <section id="alimentacao" class="form-section">
+                <div class="section-header">
+                <h3><i class="fas fa-utensils"></i> Alimentação</h3>
+                    <p>Hábitos alimentares e tipo de dieta</p>
+                </div>
+                
+                <div class="form-group">
+                    <label>Tipo de Alimentação Principal</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="tipoAlimentacao" value="racaoSeca">
+                            <span class="radiomark"></span>
+                            Ração seca
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="tipoAlimentacao" value="racaoUmida">
+                            <span class="radiomark"></span>
+                            Ração úmida comercial
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="tipoAlimentacao" value="cozida">
+                            <span class="radiomark"></span>
+                            Cozida
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="tipoAlimentacao" value="cruaSemOssos">
+                            <span class="radiomark"></span>
+                            Crua sem ossos
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="tipoAlimentacao" value="cruaComOssos">
+                            <span class="radiomark"></span>
+                            Crua com ossos
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="qualidadeAgua">Qualidade e quantidade de água</label>
+                    <textarea id="qualidadeAgua" name="qualidadeAgua" rows="3" 
+                              placeholder="Descreva sobre o acesso e qualidade da água..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="observacoesAlimentacao">Observações adicionais sobre alimentação</label>
+                    <textarea id="observacoesAlimentacao" name="observacoesAlimentacao" rows="3" 
+                              placeholder="Outras observações sobre alimentação..."></textarea>
+                </div>
+            </section>
+
+            <!-- Seção 8: Exame Físico -->
+            <section id="exameFisico" class="form-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-heartbeat"></i> Exame Físico</h3>
+                    <p>Avaliação clínica realizada pelo veterinário</p>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="temperatura">Temperatura (°C)</label>
+                        <input type="number" id="temperatura" name="temperatura" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="freqCardiaca">Freq. cardíaca (bpm)</label>
+                        <input type="number" id="freqCardiaca" name="freqCardiaca">
+                    </div>
+                    <div class="form-group">
+                        <label for="freqRespiratoria">Freq. respiratória (mpm)</label>
+                        <input type="number" id="freqRespiratoria" name="freqRespiratoria">
+                    </div>
+                    <div class="form-group">
+                        <label for="tpc">TPC</label>
+                        <input type="text" id="tpc" name="tpc" placeholder="Ex: < 2 segundos">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="estadoHidratacao">Estado de hidratação</label>
+                    <select id="estadoHidratacao" name="estadoHidratacao">
+                        <option value="">Selecione...</option>
+                        <option value="hidratado">Hidratado</option>
+                        <option value="leveDesidratacao">Leve desidratação</option>
+                        <option value="moderadaDesidratacao">Moderada desidratação</option>
+                        <option value="graveDesidratacao">Grave desidratação</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mucosas">Mucosas</label>
+                    <select id="mucosas" name="mucosas">
+                        <option value="">Selecione...</option>
+                        <option value="normocoradas">Normocoradas</option>
+                        <option value="palidas">Pálidas</option>
+                        <option value="ictericas">Ictéricas</option>
+                        <option value="cianoticas">Cianóticas</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="linfonodos">Linfonodos</label>
+                    <select id="linfonodos" name="linfonodos">
+                        <option value="">Selecione...</option>
+                        <option value="normais">Normais</option>
+                        <option value="aumentados">Aumentados</option>
+                        <option value="doloridos">Doloridos</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="auscultacao">Auscultação cardíaca e pulmonar</label>
+                    <textarea id="auscultacao" name="auscultacao" rows="3" 
+                              placeholder="Descreva os achados da auscultação..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="palpacaoAbdominal">Palpação abdominal</label>
+                    <textarea id="palpacaoAbdominal" name="palpacaoAbdominal" rows="3" 
+                              placeholder="Descreva os achados da palpação abdominal..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="outrosAchados">Outros achados relevantes</label>
+                    <textarea id="outrosAchados" name="outrosAchados" rows="3" 
+                              placeholder="Descreva outros achados relevantes..."></textarea>
+                </div>
+            </section>
+
+            <!-- Botão Principal de Assistência -->
+            <div class="ai-main-button-container">
+                <button type="button" id="analisarComIA" class="btn-ai-main">
+                    <i class="fas fa-robot"></i>
+                    <span>Assistência Inteligente</span>
+                    <small>Análise completa de sintomas, histórico e exame físico</small>
+                </button>
+            </div>
+
+            <!-- Seção de Resultados da Assistência -->
+            <div class="ai-results-section" id="aiResultsSection" style="display: none;">
+                <div class="ai-results-header">
+                    <h3><i class="fas fa-brain"></i> Análise Inteligente</h3>
+                    <p>Diagnósticos diferenciais, exames e condutas baseados em todas as informações preenchidas</p>
+                </div>
+
+                <div class="ai-loading" id="aiLoading">
+                    <div class="loading-spinner"></div>
+                    <p>Analisando informações...</p>
+                </div>
+
+                <div class="ai-results-content" id="aiResultsContent" style="display: none;">
+                    <!-- Diagnósticos Diferenciais -->
+                    <div class="ai-result-card">
+                        <h4><i class="fas fa-stethoscope"></i> Diagnósticos Diferenciais</h4>
+                        <div class="diagnosticos-list" id="diagnosticosList">
+                            <!-- Diagnósticos aparecerão aqui -->
+                        </div>
+                    </div>
+
+                    <!-- Exames Complementares -->
+                    <div class="ai-result-card">
+                        <h4><i class="fas fa-microscope"></i> Exames Complementares Sugeridos</h4>
+                        <div class="exames-list" id="examesList">
+                            <!-- Exames aparecerão aqui -->
+                        </div>
+                    </div>
+
+                    <!-- Condutas Iniciais -->
+                    <div class="ai-result-card">
+                        <h4><i class="fas fa-clipboard-list"></i> Condutas Iniciais Recomendadas</h4>
+                        <div class="condutas-list" id="condutasList">
+                            <!-- Condutas aparecerão aqui -->
+                        </div>
+                    </div>
+
+                    <!-- Aviso Importante -->
+                    <div class="ai-warning-card">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>
+                            <strong>Aviso Importante:</strong> Esta análise é apenas para auxílio diagnóstico. 
+                            O diagnóstico final e as decisões terapêuticas devem sempre ser feitos por um veterinário qualificado.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção 9: Exames Complementares -->
+            <section id="examesComplementares" class="form-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-microscope"></i> Exames Complementares</h3>
+                    <p>Exames solicitados para complementar o diagnóstico</p>
+                </div>
+                
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="exames" value="hemograma">
+                        <span class="checkmark"></span>
+                        Hemograma
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="exames" value="bioquimico">
+                        <span class="checkmark"></span>
+                        Bioquímico
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="exames" value="urinálise">
+                        <span class="checkmark"></span>
+                        Urinálise
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="exames" value="raioX">
+                        <span class="checkmark"></span>
+                        Raio-X
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="exames" value="ultrassom">
+                        <span class="checkmark"></span>
+                        Ultrassom
+                    </label>
+                </div>
+                
+                <div class="form-group">
+                    <label for="outrosExames">Outros exames</label>
+                    <textarea id="outrosExames" name="outrosExames" rows="3" 
+                              placeholder="Descreva outros exames solicitados..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="anexosExames">Anexar exames</label>
+                    <input type="file" id="anexosExames" name="anexosExames" multiple accept=".pdf,.jpg,.jpeg,.png">
+                    <div id="previewAnexos" class="preview-anexos"></div>
+                </div>
+            </section>
+
+            <!-- Seção 10: Conduta e Tratamento -->
+            <section id="condutaTratamento" class="form-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-pills"></i> Conduta e Tratamento</h3>
+                    <p>Diagnóstico e plano terapêutico</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="diagnosticoPresuntivo">Diagnóstico presuntivo</label>
+                    <textarea id="diagnosticoPresuntivo" name="diagnosticoPresuntivo" rows="3" 
+                              placeholder="Descreva o diagnóstico presuntivo..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="diagnosticoDiferencial">Diagnóstico diferencial</label>
+                    <textarea id="diagnosticoDiferencial" name="diagnosticoDiferencial" rows="3" 
+                              placeholder="Liste os diagnósticos diferenciais..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="tratamentoInstituido">Tratamento instituído</label>
+                    <textarea id="tratamentoInstituido" name="tratamentoInstituido" rows="4" 
+                              placeholder="Descreva o tratamento prescrito..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="orientacoesTutor">Orientações ao tutor</label>
+                    <textarea id="orientacoesTutor" name="orientacoesTutor" rows="4" 
+                              placeholder="Descreva as orientações fornecidas ao tutor..."></textarea>
+                </div>
+            </section>
+
+            <!-- Seção 11: Avaliação Clínica -->
+            <section id="avaliacao" class="form-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-clipboard-check"></i> Avaliação Clínica</h3>
+                    <p>Prognóstico e conclusões do atendimento</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="prognostico">Prognóstico</label>
+                    <select id="prognostico" name="prognostico">
+                        <option value="">Selecione...</option>
+                        <option value="reservado">Reservado</option>
+                        <option value="favoravel">Favorável</option>
+                        <option value="desfavoravel">Desfavorável</option>
+                        <option value="grave">Grave</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="observacoesFinais">Observações finais</label>
+                    <textarea id="observacoesFinais" name="observacoesFinais" rows="4" 
+                              placeholder="Observações adicionais sobre o caso..."></textarea>
+                </div>
+            </section>
+
+
+
+            <!-- Seção 13: Retorno -->
+            <section id="retorno" class="form-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-calendar-check"></i> Retorno</h3>
+                    <p>Agendamento e observações para retorno</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="precisaRetorno" name="precisaRetorno">
+                        <span class="checkmark"></span>
+                        Necessita retorno
+                    </label>
+                </div>
+                
+                <div id="camposRetorno" class="campos-retorno" style="display: none;">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="dataRetorno">Data prevista de retorno</label>
+                            <input type="date" id="dataRetorno" name="dataRetorno">
+                        </div>
+                        <div class="form-group">
+                            <label for="motivoRetorno">Motivo do retorno</label>
+                            <select id="motivoRetorno" name="motivoRetorno">
+                                <option value="">Selecione...</option>
+                                <option value="reavaliacao">Reavaliação</option>
+                                <option value="exames">Exames</option>
+                                <option value="continuidadeTratamento">Continuidade do tratamento</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="observacoesRetorno">Observações para retorno</label>
+                        <textarea id="observacoesRetorno" name="observacoesRetorno" rows="3" 
+                                  placeholder="Observações importantes para o retorno..."></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Navegação do Formulário (desabilitada no scroll infinito) -->
+            
+            <!-- Ações Finais -->
+            <div class="final-actions">
+                <button type="button" id="saveDraftBtn" class="btn-secondary">
+                    <i class="fas fa-file"></i> Salvar como rascunho
+                </button>
+                <button type="button" id="footerSaveBtn" class="btn-primary">
+                    <i class="fas fa-save"></i> Salvar
+                </button>
+                <button type="button" id="footerPdfBtn" class="btn-primary">
+                    <i class="fas fa-file-pdf"></i> Gerar PDF
+                </button>
+                <button type="button" id="footerPrintBtn" class="btn-secondary">
+                    <i class="fas fa-print"></i> Imprimir
+                </button>
+                <button type="button" id="footerFinishBtn" class="btn-secondary">
+                    <i class="fas fa-flag-checkered"></i> Finalizar atendimento
+                </button>
+            </div>
+        </form>
+
+        </div>
+    </div>
+
+    <!-- Modal de confirmação -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <h3>Ficha Salva com Sucesso!</h3>
+            <p>A ficha de anamnese foi salva e pode ser impressa ou exportada.</p>
+            <div class="modal-buttons">
+                <button id="printBtn" class="btn-primary">
+                    <i class="fas fa-print"></i> Imprimir
+                </button>
+                <button id="exportBtn" class="btn-secondary">
+                    <i class="fas fa-download"></i> Exportar PDF
+                </button>
+                <button id="newFormBtn" class="btn-success">
+                    <i class="fas fa-plus"></i> Nova Ficha
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js?v=29"></script>
+    
+    <!-- Script de verificação para GitHub Pages -->
+    <script>
+        // Verificar se os recursos externos carregaram
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar Font Awesome
+            if (!document.querySelector('link[href*="font-awesome"]') || 
+                !window.getComputedStyle(document.querySelector('.fas')).fontFamily.includes('Font Awesome')) {
+                console.log('Font Awesome não carregou - ícones podem não aparecer');
+            }
+            
+            // Verificar Google Fonts
+            if (!document.querySelector('link[href*="fonts.googleapis.com"]')) {
+                console.log('Google Fonts não carregou, usando fallbacks');
+            }
+            
+            // Verificar html2pdf
+            if (typeof html2pdf === 'undefined') {
+                console.log('html2pdf não carregou, PDF será limitado');
+            }
+        });
+    </script>
+</body>
+</html>
